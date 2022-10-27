@@ -1,0 +1,36 @@
+{%for item in cart%}
+<p>Food: {{item.name}}</p>
+<p>Quantity: {{item.quantity}}</p>
+<p >Unit Price: {{item.price}}</p>
+<form action="{%url 'remove' item.id%}" method="post">
+    {%csrf_token%}
+ <button onclick="remove()" type="submit">Remove from cart</button>
+</form>
+<br>
+<form action="{%url 'update_quantity' item.id%}" method="post">
+    {%csrf_token%}
+<input name="newQuantity" type="number" placeholder="{{item.quantity}}"><br>
+<button type="submit">Edit Quantity</button>
+</form>
+<hr>
+{%endfor%}
+<form action="{%url 'order'%}" method="POST">
+    {%csrf_token%}
+    <button type="submit">Order</button>
+</form>
+<form action="{%url 'clear'%}" method="post">
+    {%csrf_token%}
+<button>Clear cart</button>
+</form>
+<script>
+    let fetch = () =>{
+        fetch('127.0.0.1:8000/cart/order/')
+        .then(data =>{
+            return data.json();
+        })
+        .then(post =>{
+            console.log(post)
+        })
+    }
+    
+</script>
